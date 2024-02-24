@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: InvoiceRepository::class)]
@@ -16,8 +17,6 @@ class Invoice
     #[ORM\Column]
     private ?float $amount = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $setAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
@@ -25,6 +24,9 @@ class Invoice
     #[ORM\ManyToOne(inversedBy: 'invoices')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Customer $customer = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $sentAt = null;
 
     public function getId(): ?int
     {
@@ -43,17 +45,9 @@ class Invoice
         return $this;
     }
 
-    public function getSetAt(): ?\DateTimeImmutable
-    {
-        return $this->setAt;
-    }
 
-    public function setSetAt(\DateTimeImmutable $setAt): static
-    {
-        $this->setAt = $setAt;
 
-        return $this;
-    }
+
 
     public function getStatus(): ?string
     {
@@ -78,4 +72,18 @@ class Invoice
 
         return $this;
     }
+
+    public function getSentAt(): ?\DateTimeInterface
+    {
+        return $this->sentAt;
+    }
+
+    public function setSentAt(\DateTimeInterface $sentAt): static
+    {
+        $this->sentAt = $sentAt;
+
+        return $this;
+    }
+
+
 }
