@@ -28,6 +28,9 @@ class Invoice
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $sentAt = null;
 
+    #[ORM\Column]
+    private ?int $chrono = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +84,18 @@ class Invoice
     public function setSentAt(\DateTimeInterface $sentAt): static
     {
         $this->sentAt = $sentAt;
+
+        return $this;
+    }
+
+    public function getChrono(): ?int
+    {
+        return $this->chrono;
+    }
+
+    public function setChrono(int $chrono): static
+    {
+        $this->chrono = $chrono;
 
         return $this;
     }

@@ -17,6 +17,8 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
+        $chrono=1;
+
         for ($c = 0; $c < mt_rand(5, 20); $c++) {
             $customer = new Customer();
             $customer->setFirstName($faker->firstName())
@@ -32,7 +34,10 @@ class AppFixtures extends Fixture
                     ->setSentAt($faker->dateTimeBetween('-6 months'))
 
                     ->setStatus($faker->randomElement(['SENT', 'PAID', 'CANCELLED']))
-                    ->setCustomer($customer);
+                    ->setCustomer($customer)
+                    ->setChrono($chrono);
+
+                    $chrono++;
 
                 $manager->persist($invoice);
             }
